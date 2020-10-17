@@ -20,7 +20,7 @@ import {
     const menu = dishes.map((dish) => {
       return (
         <div key={dish.id} className="col-12 col-md-6 my-2">
-          <Card onClick={() => onClick(dish.id)}>
+          <Card >
             <CardImg width="100%" src={dish.image} alt={dish.name} />
             <CardImgOverlay>
               <CardTitle tag="h3">{dish.name}</CardTitle>

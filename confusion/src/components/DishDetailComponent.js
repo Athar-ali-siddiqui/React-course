@@ -14,19 +14,21 @@ import {
     }
     else{
       return (
-      <Card className="col-12 col-md-6">
-        <CardImg
-          top
-          width="100%"
-          src={dish.image}
-          alt={dish.name}
-          className="p-0"
-        />
-        <CardBody>
-          <CardTitle tag="h3">{dish.name}</CardTitle>
-          <CardText>{dish.description}</CardText>
-        </CardBody>
-      </Card>
+        <div className="col-12 col-md-6">
+        <Card >
+          <CardImg
+            top
+            width="100%"
+            src={dish.image}
+            alt={dish.name}
+            className="p-0"
+          />
+          <CardBody>
+            <CardTitle tag="h3">{dish.name}</CardTitle>
+            <CardText>{dish.description}</CardText>
+          </CardBody>
+        </Card>
+        </div>
     );
     }   
   }
