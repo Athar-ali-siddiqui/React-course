@@ -6,8 +6,10 @@ import {
   CardImgOverlay,
   CardText,
   CardTitle,
+  Breadcrumb,
+  BreadcrumbItem,
 } from "reactstrap";
-
+import { Link } from 'react-router-dom';
   
   // componentDidMount(){
   //   console.log("Menu's componentDidMount invoked")
@@ -21,17 +23,33 @@ import {
       return (
         <div key={dish.id} className="col-12 col-md-6 my-2">
           <Card >
-            <CardImg width="100%" src={dish.image} alt={dish.name} />
-            <CardImgOverlay>
-              <CardTitle tag="h3">{dish.name}</CardTitle>
-            </CardImgOverlay>
+            <Link to={`/menu/${dish.id}`}>
+                <CardImg width="100%" src={dish.image} alt={dish.name} />
+                <CardImgOverlay>
+                  <CardTitle tag="h3">{dish.name}</CardTitle>
+                </CardImgOverlay>
+            </Link>
           </Card>
         </div>
       );
     });
     return (
-      <div className="container mt-5">
-        <div className="row">{menu}</div>
+      <div className="container">
+        <div className="row ">
+         <Breadcrumb>
+            <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
+            <BreadcrumbItem active>Menu</BreadcrumbItem>
+         </Breadcrumb>
+        </div>
+        <div className="row">
+          <div className="col-12 mt-4">
+            <h2>Menu</h2>
+            <hr/>
+          </div>
+        
+          {menu}
+          
+        </div>
       </div>
     );
   }

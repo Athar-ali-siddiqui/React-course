@@ -21,6 +21,10 @@ function Home(props) {
   return(
     <div className="container">
       <div className="row my-2">
+        <div className="col-12 mt-4">
+          <h2>Home</h2>
+          <hr/>
+        </div>
         <div className="col-12 col-md-4">
           <RenderCard item={props.dish}/>
         </div>
