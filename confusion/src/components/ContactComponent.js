@@ -129,7 +129,7 @@ class Contact extends React.Component {
                             <FormGroup row>
                                 <Label htmlFor="firstname" md={2}>Firstname</Label>
                                 <Col md={10}>
-                                    <Input type="text" name="firstname" id="firstname" placeholder="Firstname"  onChange={this.handleInputChange} onBlur={this.handleBlur} valid={errors.firstname === ''} invalid={errors.firstname !== ''}  />
+                                    <Input type="text" name="firstname" id="firstname" placeholder="Firstname" value={this.state.firstname} onChange={this.handleInputChange} onBlur={this.handleBlur} valid={errors.firstname === ''} invalid={errors.firstname !== ''}  />
                                     <FormFeedback>{errors.firstname}</FormFeedback>
                                 </Col>
                             </FormGroup>
