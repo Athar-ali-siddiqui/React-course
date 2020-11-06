@@ -1,4 +1,6 @@
 import * as ActionTypes from './ActionTypes';
+import { DISHES } from "../shared/dishes";
+
 
 export const addComment = (dishId , rating, author , comment) =>({
    type: ActionTypes.ADD_COMMENTS,
@@ -9,3 +11,42 @@ export const addComment = (dishId , rating, author , comment) =>({
       comment:comment,
    }
 });
+
+export const fetchDishes = () => (dispatch) => {
+   dispatch(dishLoading(true));
+
+   setTimeout(() => {
+      dispatch(addDishes(DISHES))
+   },2000);
+};
+
+export const dishLoading = () => ({
+   type:ActionTypes.DISHES_LOADING
+});
+
+export const dishFailed = (errMsg) => ({
+   type:ActionTypes.DISHES_FAILED,
+   payload:errMsg
+})
+
+export const addDishes = (dishes) => ({
+   type:ActionTypes.ADD_DISHES,
+   payload:dishes
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

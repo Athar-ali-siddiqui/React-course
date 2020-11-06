@@ -8,7 +8,6 @@ import { ConfigureStore } from './redux/configureStore';
 const store = ConfigureStore();
 
 class App extends React.Component {
-
   render() {
     return (
       <Provider store={store}>
@@ -18,7 +17,6 @@ class App extends React.Component {
           </div>
         </BrowserRouter>
       </Provider>
-
     );
   }
 }

@@ -1,20 +1,6 @@
 import React from "react";
-import {
-  Card,
-  CardImg,
-  CardBody,
-  CardText,
-  CardTitle,
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Breadcrumb,
-  BreadcrumbItem,
-  Row,Col,
-  Label,
-
-} from "reactstrap";
+import {Loading} from './LoadingComponent';
+import {Card,CardImg,CardBody,CardText,CardTitle,Button,Modal,ModalHeader,ModalBody,Breadcrumb,BreadcrumbItem,Row,Col,Label,} from "reactstrap";
 import { LocalForm, Errors, Control } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 
@@ -39,8 +25,6 @@ class CommentForm extends React.Component{
   handleSubmit(values){
     console.log(this.props.dishId)
     this.props.addComment(this.props.dishId , values.rating, values.author , values.comment)
-    // console.log("Current state is :" + JSON.stringify(values))
-    // alert("Current state is :" + JSON.stringify(values))
   }
   render(){
     return(
@@ -140,22 +124,46 @@ function RenderComment({comments,addComment}) {
   );
   
 }
-function DishDetail({dish ,comments,addComment}) {
-  return (
-    <div className="container">
-      <div className="row ">
-         <Breadcrumb>
-            <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
-            <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
-         </Breadcrumb>
+function DishDetail({dish,isLoading,errMsg,comments,addComment}) {
+  if (isLoading){
+    return(
+      <div className="container">
+        <div className="row ">
+          <Loading />
+        </div>
       </div>
-      <h3 className="my-1">{dish.name}</h3>
-      <div className="row my-2">
-        <RenderDish dish={dish} />
-        <RenderComment comments={comments} addComment={addComment}/>
+    )
+  }
+  else if (errMsg){
+    return(
+      <div className="container">
+        <div className="row ">
+          <h4>{errMsg }</h4>
+        </div>
       </div>
-    </div>
-  );
+    )
+  }
+
+  else if (dish != null){
+    return (
+      <div className="container">
+        <div className="row ">
+          <Breadcrumb>
+              <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
+              <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
+        <h3 className="my-1">{dish.name}</h3>
+        <div className="row my-2">
+          <RenderDish dish={dish} />
+          <RenderComment comments={comments} addComment={addComment}/>
+        </div>
+      </div>
+    );
+  }
+  else {
+    return(<div></div>)
+  }
 }
 
 export default DishDetail;

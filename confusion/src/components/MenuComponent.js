@@ -1,4 +1,5 @@
 import React from "react";
+import {Loading} from './LoadingComponent';
 import {
   Card,
   CardImg,
@@ -17,9 +18,30 @@ import { Link } from 'react-router-dom';
   // componentDidUpdate(){
   //   console.log("Menu's componentDidupdate invoked")
   // }
-  function Menu({dishes , onClick}) {
+  function Menu({ isLoading, errMsg, dishes }) {
     // console.log("Menu's render invoked")
-    const menu = dishes.map((dish) => {
+    if(isLoading){
+      return(
+        <div className="container">
+          <div className="row">
+            <Loading/>
+          </div>
+        </div>
+      )
+    }
+    else if (errMsg){
+       return(
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <h4>{errMsg}</h4>
+            </div>
+          </div>
+        </div>
+      )
+    }
+    else{
+      const menu = dishes.map((dish) => {
       return (
         <div key={dish.id} className="col-12 col-md-6 my-2">
           <Card >
@@ -33,25 +55,26 @@ import { Link } from 'react-router-dom';
         </div>
       );
     });
-    return (
-      <div className="container">
-        <div className="row ">
-         <Breadcrumb>
-            <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
-            <BreadcrumbItem active>Menu</BreadcrumbItem>
-         </Breadcrumb>
-        </div>
-        <div className="row">
-          <div className="col-12 mt-4">
-            <h2>Menu</h2>
-            <hr/>
+      return (
+        <div className="container">
+          <div className="row ">
+           <Breadcrumb>
+              <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
+              <BreadcrumbItem active>Menu</BreadcrumbItem>
+           </Breadcrumb>
           </div>
-        
-          {menu}
+          <div className="row">
+            <div className="col-12 mt-4">
+              <h2>Menu</h2>
+              <hr/>
+            </div>
           
+            {menu}
+            
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 
 export default Menu;
