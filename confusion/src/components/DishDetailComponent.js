@@ -3,6 +3,7 @@ import {Loading} from './LoadingComponent';
 import {Card,CardImg,CardBody,CardText,CardTitle,Button,Modal,ModalHeader,ModalBody,Breadcrumb,BreadcrumbItem,Row,Col,Label,} from "reactstrap";
 import { LocalForm, Errors, Control } from 'react-redux-form';
 import { Link } from 'react-router-dom';
+import {baseUrl } from '../shared/baseUrl';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || (val.length <= len) ;
@@ -85,7 +86,7 @@ function RenderDish({dish}) {
         <CardImg
           top
           width="100%"
-          src={dish.image}
+          src={baseUrl + dish.image}
           alt={dish.name}
           className="p-0"
         />

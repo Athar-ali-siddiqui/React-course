@@ -11,7 +11,8 @@ import {
   BreadcrumbItem,
 } from "reactstrap";
 import { Link } from 'react-router-dom';
-  
+import {baseUrl } from '../shared/baseUrl';
+
   // componentDidMount(){
   //   console.log("Menu's componentDidMount invoked")
   // }
@@ -46,7 +47,7 @@ import { Link } from 'react-router-dom';
         <div key={dish.id} className="col-12 col-md-6 my-2">
           <Card >
             <Link to={`/menu/${dish.id}`}>
-                <CardImg width="100%" src={dish.image} alt={dish.name} />
+                <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                 <CardImgOverlay>
                   <CardTitle tag="h3">{dish.name}</CardTitle>
                 </CardImgOverlay>
