@@ -7,10 +7,10 @@ export const Dishes = (state = {isLoading : true,errMsg : null,dishes :[]}, acti
          return {...state,isLoading : false , errMsg : null , dishes : action.payload}
          
       case ActionTypes.DISHES_LOADING:
-         return {...state,isLoading : true,errMsg : null,dishes : []}
+         return {...state,isLoading : true,errMsg : null}
             
       case ActionTypes.DISHES_FAILED:
-         return {...state,isLoading : false,errMsg : action.payload,dishes : []}
+         return {...state,isLoading : false,errMsg : action.payload}
 
       default:
          return state;

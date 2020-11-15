@@ -24,8 +24,9 @@ class CommentForm extends React.Component{
     })
   }
   handleSubmit(values){
-    console.log(this.props.dishId)
-    this.props.addComment(this.props.dishId , values.rating, values.author , values.comment)
+    this.props.postComment(this.props.dishId , values.rating, values.author , values.comment);
+    setTimeout(this.toggleModal(),1500);
+    
   }
   render(){
     return(
@@ -79,7 +80,6 @@ class CommentForm extends React.Component{
 };
 
 function RenderDish({dish}) {
-  console.log(dish)
   return (
     <div className="col-12 col-md-6 ">
       <Card >
@@ -98,7 +98,7 @@ function RenderDish({dish}) {
     </div>
   );
 }
-function RenderComment({comments,addComment}) {
+function RenderComment({comments,postComment}) {
   const comment = comments.map((cmt) => {
   return (
     <div key={cmt.id}>
@@ -114,18 +114,20 @@ function RenderComment({comments,addComment}) {
     </div>
   );
   });
+  // console.log(comments)
   return (
     <div className="col-12 col-md-6 ">
       <h3>Comments</h3>
       {comment}
       <div>
-        <CommentForm dishId={comments[0].dishId} addComment={addComment}/>
+        <CommentForm dishId={comments[0].dishId} postComment={postComment}/>
       </div>
     </div>
   );
   
 }
-function DishDetail({dish,isLoading,errMsg,comments,addComment}) {
+function DishDetail({dish,isLoading,errMsg,comments,postComment}) {
+  // console.log(dish,isLoading,errMsg,comments,postComment)
   if (isLoading){
     return(
       <div className="container">
@@ -157,7 +159,7 @@ function DishDetail({dish,isLoading,errMsg,comments,addComment}) {
         <h3 className="my-1">{dish.name}</h3>
         <div className="row my-2">
           <RenderDish dish={dish} />
-          <RenderComment comments={comments} addComment={addComment}/>
+          <RenderComment comments={comments} postComment={postComment}/>
         </div>
       </div>
     );

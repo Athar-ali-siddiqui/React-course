@@ -9,11 +9,11 @@ import About from './AboutComponent';
 import { actions } from 'react-redux-form';
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-import { addComment , fetchDishes , fetchComments , fetchPromos } from "../redux/ActionCreators";
+import { postComment , fetchDishes , fetchComments , fetchPromos } from "../redux/ActionCreators";
 
 
 const mapDispatchToProps = dispatch => ({
-  addComment : (dishId , rating, author , comment) => dispatch(addComment(dishId , rating, author , comment)),
+  postComment : (dishId , rating, author , comment) => dispatch(postComment(dishId , rating, author , comment)),
   fetchDishes : () => {dispatch(fetchDishes())},
   resetFeedback : () => {dispatch(actions.reset('feedback'))},
   fetchComments : () => {dispatch(fetchComments())},
@@ -35,8 +35,8 @@ class Main extends React.Component {
   }
 
   componentDidMount(){
-    this.props.fetchDishes();
     this.props.fetchComments();
+    this.props.fetchDishes();
     this.props.fetchPromos();
   }
 
@@ -54,14 +54,15 @@ class Main extends React.Component {
       )
     };
     const DishWithId =  ({match})  =>  {
+      // console.log(parseInt(match.params.dishId,10))
+      // console.log("comments :", this.props.comments.comments ,"dishes: ", this.props.dishes.dishes,"promotions: ", this.props.promotions.promotions);
       return(
         <DishDetail 
         dish={this.props.dishes.dishes.filter((dish)=>dish.id === parseInt(match.params.dishId,10))[0]}
         isLoading={this.props.dishes.isLoading}
         errMsg={this.props.dishes.errMsg}
-        comments={this.props.comments.comments.filter((dish)=>dish.dishId===parseInt(match.params.dishId,10))} 
-        addComment={this.props.addComment}
-        commentsErrMsg={this.props.comments.errMsg}/>
+        comments={this.props.comments.comments.filter((cmt)=>cmt.dishId === parseInt(match.params.dishId,10))} 
+        postComment={this.props.postComment}/>
       )
     };
     return (

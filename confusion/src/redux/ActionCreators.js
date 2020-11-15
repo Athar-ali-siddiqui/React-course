@@ -3,46 +3,84 @@ import { DISHES } from "../shared/dishes";
 import {baseUrl } from '../shared/baseUrl';
 
 
-export const addComment = (dishId , rating, author , comment) =>({
+export const addComment = (comment) => {
+   // console.log("At addComment :",comment)
+   return ({
    type: ActionTypes.ADD_COMMENT,
-   payload: {
+   payload:comment
+   });
+}
+
+export const postComment = (dishId , rating, author , comment) => (dispatch) => {
+   var newComment = {
       dishId:dishId , 
       rating:rating , 
       author:author , 
       comment:comment,
-   }
-});
+   };
+   // console.log(newComment);
+   newComment.date = new Date().toISOString();
+   return fetch(baseUrl + 'comments' ,{
+      method: 'POST',
+      body:JSON.stringify(newComment),
+      headers:{
+         'Content-Type':'application/json'
+      },
+      credentials:'same-origin'
+   })
+   .then(response =>{
+      if (response.ok){
+         return response;
+      }
+      else{
+         var error = new Error("Error " + response.status + " :" + response.statusText)
+         error.response = response;
+         throw error
+      }
+   },error => {
+      var errmess = new Error(error.message);
+      throw errmess;
+   })
+   .then(response => response.json())
+   .then(response => {
+                     // console.log("here at then: " ,response); 
+                     dispatch(addComment(response));
+                     })
+   .catch(error => alert('Your comment could not be posted\nError : '+error.message ))
+   
+}
 
 
 ////////////////////**************** DISHES ****************////////////////////
 
 export const fetchDishes = () => (dispatch) => {
-   dispatch(dishLoading(true));
 
-   return fetch(baseUrl + 'dishees')
-            .then(response =>{
-               if (response.ok){
-                  return response;
-               }
-               else{
-                  var error = new Error("Error " + response.status + " :" + response.statusText)
-                  error.response = response;
-                  throw error
-               }
-            },error => {
-               var errmess = new Error(error.message);
-               throw errmess;
-            })
-            .then(response => response.json())
-            .then(dishes => dispatch(addDishes(dishes)))
-            .catch(error => dispatch(dishFailed(error.message)))
-};
+    dispatch(dishesLoading(true));
 
-export const dishLoading = () => ({
+    return fetch(baseUrl + 'dishes')
+    .then(response => {
+        if (response.ok) {
+          return response;
+        } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+      })
+    .then(response => response.json())
+    .then(dishes => dispatch(addDishes(dishes)))
+    .catch(error => dispatch(dishesFailed(error.message)));
+}
+
+export const dishesLoading = () => ({
    type:ActionTypes.DISHES_LOADING
 });
 
-export const dishFailed = (errMsg) => ({
+export const dishesFailed = (errMsg) => ({
    type:ActionTypes.DISHES_FAILED,
    payload:errMsg
 })
