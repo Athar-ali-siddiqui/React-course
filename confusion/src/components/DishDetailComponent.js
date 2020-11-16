@@ -81,38 +81,44 @@ class CommentForm extends React.Component{
 
 function RenderDish({dish}) {
   return (
-    <div className="col-12 col-md-6 ">
-      <Card >
-        <CardImg
-          top
-          width="100%"
-          src={baseUrl + dish.image}
-          alt={dish.name}
-          className="p-0"
-        />
-        <CardBody>
-          <CardTitle tag="h3">{dish.name}</CardTitle>
-          <CardText>{dish.description}</CardText>
-        </CardBody>
-      </Card>
+    <div>
+       
+        <div className="col-12 col-md-6 ">
+          <Card >
+            <CardImg
+              top
+              width="100%"
+              src={baseUrl + dish.image}
+              alt={dish.name}
+              className="p-0"
+            />
+            <CardBody>
+              <CardTitle tag="h3">{dish.name}</CardTitle>
+              <CardText>{dish.description}</CardText>
+            </CardBody>
+          </Card>
+        </div>
+      
     </div>
   );
 }
 function RenderComment({comments,postComment}) {
   const comment = comments.map((cmt) => {
-  return (
-    <div key={cmt.id}>
-      <p>{cmt.comment}</p>
-      <p>
-        --{cmt.author},{" "}
-        {new Intl.DateTimeFormat("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "2-digit",
-        }).format(new Date(Date.parse(cmt.date)))}
-      </p>
-    </div>
-  );
+    return (
+      
+        <div key={cmt.id}>
+          <p>{cmt.comment}</p>
+          <p>
+            --{cmt.author},{" "}
+            {new Intl.DateTimeFormat("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "2-digit",
+            }).format(new Date(Date.parse(cmt.date)))}
+          </p>
+        </div>
+      
+    );
   });
   // console.log(comments)
   return (
@@ -170,3 +176,10 @@ function DishDetail({dish,isLoading,errMsg,comments,postComment}) {
 }
 
 export default DishDetail;
+
+// renderdish
+//  <FadeTranform in transformProps={{exitTransform: 'scale(0.5) translateY(-50%)'}} >
+// </FadeTranform>
+
+// render comment
+// <Stagger in> {comment<Fade in ></Fade>}</Stagger>

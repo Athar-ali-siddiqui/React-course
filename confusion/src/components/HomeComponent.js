@@ -17,14 +17,18 @@ function RenderCard({ item , isLoading , errMsg }){
   }
   else{
     return(
-      <Card>
-        <CardImg src={baseUrl + item.image} alt={item.name}/>
-        <CardBody>
-        <CardTitle tag="h3">{item.name}</CardTitle>
-        {item.designation ? <CardSubtitle tag="h5">{item.designation}</CardSubtitle>:null}
-        <CardText>{item.description}</CardText>
-        </CardBody>
-      </Card>
+      <div>
+        
+          <Card>
+            <CardImg src={baseUrl + item.image} alt={item.name}/>
+            <CardBody>
+            <CardTitle tag="h3">{item.name}</CardTitle>
+            {item.designation ? <CardSubtitle tag="h5">{item.designation}</CardSubtitle>:null}
+            <CardText>{item.description}</CardText>
+            </CardBody>
+          </Card>
+        
+      </div>
     )
   };
 }
@@ -45,7 +49,7 @@ function Home(props) {
           <RenderCard item={props.promotion} isLoading={props.promoLoading} errMsg={props.promoErrMsg}/>
         </div>
         <div className="col-12 col-md-4">
-          <RenderCard item={props.leader} />
+          <RenderCard item={props.leader} isLoading={props.leaderLoading} errMsg={props.leaderErrMsg}/>
         </div>
       </div>
     </div>
@@ -54,3 +58,7 @@ function Home(props) {
 }
 
 export default Home;
+
+// render => Card
+// <FadeTranform in transformProps={{exitTransform: 'scale(0.5) translateY(-50%)'}} >
+//         </FadeTranform>
