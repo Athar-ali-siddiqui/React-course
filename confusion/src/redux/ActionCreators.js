@@ -1,7 +1,47 @@
 import * as ActionTypes from './ActionTypes';
-import { DISHES } from "../shared/dishes";
 import {baseUrl } from '../shared/baseUrl';
 
+////////////////////**************** add feedback ****************////////////////////
+
+export const postFeedback = (firstname ,lastname,telnum, email, agree , contactType , message) => (dispatch) => {
+   var newFeedback = {
+      "firstname": firstname,
+      "lastname": lastname,
+      "telnum": telnum,
+      "email": email,
+      "agree": agree,
+      "contactType": contactType,
+      "message": message,
+   };
+   newFeedback.date = new Date().toISOString();
+   return fetch(baseUrl + 'feedback',{
+      method: 'POST',
+      body: JSON.stringify(newFeedback),
+      headers:{
+         'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin',
+   })
+   .then(response =>{
+      if (response.ok){
+         return response;
+      }
+      else{
+         var error = new Error("Error " + response.status + " :" + response.statusText)
+         error.response = response;
+         throw error
+      }
+   },error => {
+      var errmess = new Error(error.message);
+      throw errmess;
+   })
+   .then(response => response.json())
+   .then(response => {console.log(response);alert("Thankyou for your feedback : " + JSON.stringify(response))})
+   .catch(error => alert('Your feedback could not be posted\nError : '+error.message ))
+   
+}
+
+////////////////////**************** add comment ****************////////////////////
 
 export const addComment = (comment) => {
    // console.log("At addComment :",comment)

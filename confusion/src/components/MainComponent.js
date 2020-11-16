@@ -9,12 +9,13 @@ import About from './AboutComponent';
 import { actions } from 'react-redux-form';
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
-import { postComment , fetchDishes , fetchComments , fetchPromos , fetchLeader } from "../redux/ActionCreators";
+import { postComment , postFeedback , fetchDishes , fetchComments , fetchPromos , fetchLeader } from "../redux/ActionCreators";
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
 const mapDispatchToProps = dispatch => ({
   postComment : (dishId , rating, author , comment) => dispatch(postComment(dishId , rating, author , comment)),
+  postFeedback : (firstname ,lastname,telnum, email, agree , contactType , message) => dispatch(postFeedback(firstname ,lastname,telnum, email, agree , contactType , message)),
   fetchDishes : () => {dispatch(fetchDishes())},
   resetFeedback : () => {dispatch(actions.reset('feedback'))},
   fetchComments : () => {dispatch(fetchComments())},
@@ -28,6 +29,7 @@ const mapStateToProps = state => {
     comments : state.comments,
     promotions : state.promotions,
     leaders : state.leaders,
+    feedback : state.feedback,
   }
 };
 
@@ -79,11 +81,10 @@ class Main extends React.Component {
               <Route path="/home" component={HomePage} />
               <Route exact path="/menu" component={() => <Menu isLoading={this.props.dishes.isLoading} errMsg={this.props.dishes.errMsg} dishes={this.props.dishes.dishes}/>} />
               <Route  path="/menu/:dishId" component={DishWithId} />
-              <Route exact path="/contactus" component={() => <Contact resetFeedback={this.props.resetFeedback}/> } />
+              <Route exact path="/contactus" component={() => <Contact postFeedback={this.props.postFeedback} resetFeedback={this.props.resetFeedback}/> } />
               <Route exact path="/aboutus" component={ () => <About isLoading={this.props.leaders.isLoading} errMsg={this.props.leaders.errMsg} leaders={this.props.leaders.leaders}/>} />
               <Redirect to="/home"/>
             </Switch>
-
           </CSSTransition>
         </TransitionGroup>
         <Footer/>
